@@ -34,7 +34,7 @@ class DishDetail extends Component {
         <ul className="list-unstyled">
           {comments.map((comment) => {
             return (
-              <div key={comments.id}>
+              <div key={comment.id}>
                 <li>{comment.comment}</li>
                 <br></br>
                 <li>
