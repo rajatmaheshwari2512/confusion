@@ -38,7 +38,12 @@ class DishDetail extends Component {
                 <li>{comment.comment}</li>
                 <br></br>
                 <li>
-                  -- {comment.author},{comment.date}
+                  -- {comment.author},
+                  {new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  }).format(new Date(Date.parse(comment.date)))}
                 </li>
                 <br></br>
               </div>
@@ -50,11 +55,11 @@ class DishDetail extends Component {
   }
   render() {
     var selectedDish = this.props.selectedDish;
-    if (selectedDish === null) {
+    if (selectedDish === null || selectedDish === undefined) {
       return <div></div>;
     }
     return (
-      <div>
+      <div className="container">
         <div className="row">
           <div className="col-12 col-md-5 m-1">
             {this.renderDish(selectedDish)}
