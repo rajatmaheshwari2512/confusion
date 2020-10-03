@@ -13,7 +13,7 @@ function RenderDish({ selectedDish }) {
   );
 }
 function RenderComments({ comments }) {
-  if (comments === null || comments == undefined) {
+  if (comments === null || comments === undefined) {
     return <div></div>;
   } else {
     return (
