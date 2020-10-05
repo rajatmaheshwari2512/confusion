@@ -24,6 +24,14 @@ class Contact extends Component {
       message: "",
     };
   }
+  handleInputChange(event){
+
+  }
+  handleSubmit(event){
+    console.log("Current State"+JSON.stringify(this.state));
+    alert("Current State"+JSON.stringify(this.state));
+    event.preventDefault();
+  }
   render() {
     return (
       <div className="container">
@@ -117,6 +125,78 @@ class Contact extends Component {
                     placeholder="Last Name"
                     value={this.state.lastname}
                   />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label htmlFor="telnum" md={2}>
+                  Contact Tel.
+                </Label>
+                <Col md={10}>
+                  <Input
+                    type="text"
+                    id="telnum"
+                    name="temnum"
+                    placeholder="Telephone Number"
+                    value={this.state.telnum}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label htmlFor="email" md={2}>
+                  Email
+                </Label>
+                <Col md={10}>
+                  <Input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={this.state.email}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md={{ size: 6, offset: 2 }}>
+                  <FormGroup check>
+                    <Label check>
+                      <Input
+                        type="checkbox"
+                        name="agree"
+                        checked={this.state.agree}
+                      />
+                      {" "}<strong>May we contact you?</strong>
+                    </Label>
+                  </FormGroup>
+                </Col>
+                <Col md={{ size: 3, offset: 1 }}>
+                  <Input
+                    type="select"
+                    name="contactType"
+                    value={this.state.contactType}>
+                    <option>Tel.</option>
+                    <option>Email</option>
+                  </Input>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label htmlFor="feedback" md={2}>
+                  Your Feedback
+                </Label>
+                <Col md={10}>
+                  <Input
+                    type="textarea"
+                    id="message"
+                    name="message"
+                    rows="12"
+                    value={this.state.message}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md={{size:10, offset:2}}>
+                  <Button type="submit" color="primary">
+                    Send Feedback
+                  </Button>
                 </Col>
               </FormGroup>
             </Form>
