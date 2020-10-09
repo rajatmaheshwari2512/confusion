@@ -27,6 +27,7 @@ class Header extends Component {
     };
     this.toggleNav = this.toggleNav.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
   toggleNav() {
     this.setState({
@@ -37,6 +38,18 @@ class Header extends Component {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
     });
+  }
+  handleLogin(event) {
+    this.toggleModal();
+    alert(
+      "Username: " +
+        this.username.value +
+        " Password: " +
+        this.password.value +
+        " Remember: " +
+        this.remember.checked
+    );
+    event.preventDefault();
   }
   render() {
     return (
@@ -106,11 +119,36 @@ class Header extends Component {
             <Form onSubmit={this.handleLogin}>
               <FormGroup>
                 <Label htmlFor="username">Username</Label>
-                <Input type="text" id="username" name="username"></Input>
+                <Input
+                  type="text"
+                  id="username"
+                  name="username"
+                  innerRef={(input) => (this.username = input)}
+                ></Input>
               </FormGroup>
               <FormGroup>
                 <Label htmlFor="password">Password</Label>
-                <Input type="password" id="password" name="password"></Input>
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  innerRef={(input) => (this.password = input)}
+                ></Input>
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input
+                    type="checkbox"
+                    name="remember"
+                    innerRef={(input) => (this.remember = input)}
+                  ></Input>
+                  Remember Me
+                </Label>
+              </FormGroup>
+              <FormGroup>
+                <Button type="submit" value="Submit" color="primary">
+                  Login
+                </Button>
               </FormGroup>
             </Form>
           </ModalBody>
