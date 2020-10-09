@@ -7,6 +7,14 @@ import {
   Collapse,
   NavItem,
   Jumbotron,
+  Modal,
+  Button,
+  ModalBody,
+  ModalHeader,
+  FormGroup,
+  Form,
+  Label,
+  Input,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
@@ -15,12 +23,19 @@ class Header extends Component {
     super(props);
     this.state = {
       isNavOpen: false,
+      isModalOpen: false,
     };
     this.toggleNav = this.toggleNav.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
   toggleNav() {
     this.setState({
       isNavOpen: !this.state.isNavOpen,
+    });
+  }
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
     });
   }
   render() {
@@ -61,6 +76,13 @@ class Header extends Component {
                   </NavLink>
                 </NavItem>
               </Nav>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <Button outline onClick={this.toggleModal}>
+                    <span className="fa fa-sign-in"></span>Login
+                  </Button>
+                </NavItem>
+              </Nav>
             </Collapse>
           </div>
         </Navbar>
@@ -78,6 +100,21 @@ class Header extends Component {
             </div>
           </div>
         </Jumbotron>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader>Login</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.handleLogin}>
+              <FormGroup>
+                <Label htmlFor="username">Username</Label>
+                <Input type="text" id="username" name="username"></Input>
+              </FormGroup>
+              <FormGroup>
+                <Label htmlFor="password">Password</Label>
+                <Input type="password" id="password" name="password"></Input>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+        </Modal>
       </React.Fragment>
     );
   }
