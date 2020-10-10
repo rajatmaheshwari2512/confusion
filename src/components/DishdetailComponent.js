@@ -13,6 +13,7 @@ import {
   ModalBody,
   Row,
   Label,
+  Col,
 } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
@@ -47,23 +48,27 @@ class CommentForm extends Component {
           <ModalHeader>Submit Comment</ModalHeader>
           <ModalBody>
             <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-              <Row className="form-group mx-auto">
-                <Label htmlFor="rating">Rating</Label>
-                <Control.select
-                  model=".rating"
-                  name="rating"
-                  className="form-control"
-                  validators={{ required }}
-                >
-                  <option selected disabled>
-                    Rating
-                  </option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </Control.select>
+              <Row className="form-group ">
+                <Label htmlFor="rating" className="ml-3">
+                  Rating
+                </Label>
+                <Col md={12}>
+                  <Control.select
+                    model=".rating"
+                    name="rating"
+                    className="form-control"
+                    validators={{ required }}
+                  >
+                    <option selected disabled>
+                      Rating
+                    </option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </Control.select>
+                </Col>
                 <Errors
                   className="text-danger"
                   model=".rating"
@@ -71,19 +76,23 @@ class CommentForm extends Component {
                   messages={{ required: "A Rating is required" }}
                 />
               </Row>
-              <Row className="form-group mx-auto">
-                <Label htmlFor="name">Your Name</Label>
-                <Control.text
-                  model=".name"
-                  name="name"
-                  className="form-control"
-                  placeholder="Your Name"
-                  validators={{
-                    required,
-                    minLength: minLength(3),
-                    maxLength: maxLength(15),
-                  }}
-                />
+              <Row className="form-group">
+                <Label htmlFor="name" className="ml-3">
+                  Your Name
+                </Label>
+                <Col md={12}>
+                  <Control.text
+                    model=".name"
+                    name="name"
+                    className="form-control"
+                    placeholder="Your Name"
+                    validators={{
+                      required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(15),
+                    }}
+                  />
+                </Col>
                 <Errors
                   className="text-danger"
                   model=".name"
@@ -95,14 +104,18 @@ class CommentForm extends Component {
                   }}
                 />
               </Row>
-              <Row className="form-group mx-auto">
-                <Label htmlFor="comment">Comment</Label>
-                <Control.textarea
-                  model=".comment"
-                  name="comment"
-                  className="form-control"
-                  rows="6"
-                />
+              <Row className="form-group">
+                <Label htmlFor="comment" className="ml-3">
+                  Comment
+                </Label>
+                <Col md={12}>
+                  <Control.textarea
+                    model=".comment"
+                    name="comment"
+                    className="form-control"
+                    rows="6"
+                  />
+                </Col>
               </Row>
               <Row className="form-group mx-auto">
                 <Button type="submit" color="primary">
