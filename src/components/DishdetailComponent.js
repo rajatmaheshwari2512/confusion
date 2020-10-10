@@ -70,7 +70,7 @@ class CommentForm extends Component {
                   </Control.select>
                 </Col>
                 <Errors
-                  className="text-danger"
+                  className="text-danger ml-3"
                   model=".rating"
                   show="touched"
                   messages={{ required: "A Rating is required" }}
@@ -94,7 +94,7 @@ class CommentForm extends Component {
                   />
                 </Col>
                 <Errors
-                  className="text-danger"
+                  className="text-danger ml-3"
                   model=".name"
                   show="touched"
                   messages={{
