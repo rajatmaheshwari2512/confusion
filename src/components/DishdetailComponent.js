@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Card,
   CardImg,
@@ -7,9 +7,115 @@ import {
   CardTitle,
   Breadcrumb,
   BreadcrumbItem,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Row,
+  Label,
 } from "reactstrap";
+import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
+class CommentForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+    };
+    this.toggleModal = this.toggleModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+    });
+  }
+  handleSubmit(values) {
+    alert(JSON.stringify(values));
+  }
+  render() {
+    return (
+      <div className="container">
+        <Button outline onClick={this.toggleModal} className="ml-n3">
+          <span className="fas fa-pencil"></span>Submit Comment
+        </Button>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader>Submit Comment</ModalHeader>
+          <ModalBody>
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+              <Row className="form-group mx-auto">
+                <Label htmlFor="rating">Rating</Label>
+                <Control.select
+                  model=".rating"
+                  name="rating"
+                  className="form-control"
+                  validators={{ required }}
+                >
+                  <option selected disabled>
+                    Rating
+                  </option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Control.select>
+                <Errors
+                  className="text-danger"
+                  model=".rating"
+                  show="touched"
+                  messages={{ required: "A Rating is required" }}
+                />
+              </Row>
+              <Row className="form-group mx-auto">
+                <Label htmlFor="name">Your Name</Label>
+                <Control.text
+                  model=".name"
+                  name="name"
+                  className="form-control"
+                  placeholder="Your Name"
+                  validators={{
+                    required,
+                    minLength: minLength(3),
+                    maxLength: maxLength(15),
+                  }}
+                />
+                <Errors
+                  className="text-danger"
+                  model=".name"
+                  show="touched"
+                  messages={{
+                    required: "Your name is required",
+                    minLength: "Name must be longer than 2 characters",
+                    maxLength: "Name must be 15 characters or less",
+                  }}
+                />
+              </Row>
+              <Row className="form-group mx-auto">
+                <Label htmlFor="comment">Comment</Label>
+                <Control.textarea
+                  model=".comment"
+                  name="comment"
+                  className="form-control"
+                  rows="6"
+                />
+              </Row>
+              <Row className="form-group mx-auto">
+                <Button type="submit" color="primary">
+                  Submit
+                </Button>
+              </Row>
+            </LocalForm>
+          </ModalBody>
+        </Modal>
+      </div>
+    );
+  }
+}
 function RenderDish({ selectedDish }) {
   return (
     <Card>
@@ -23,28 +129,35 @@ function RenderDish({ selectedDish }) {
 }
 function RenderComments({ comments }) {
   if (comments === null || comments === undefined) {
-    return <div></div>;
+    return (
+      <div className="container">
+        <CommentForm />
+      </div>
+    );
   } else {
     return (
-      <ul className="list-unstyled">
-        {comments.map((comment) => {
-          return (
-            <div key={comment.id}>
-              <li>{comment.comment}</li>
-              <br></br>
-              <li>
-                -- {comment.author},
-                {new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "2-digit",
-                }).format(new Date(Date.parse(comment.date)))}
-              </li>
-              <br></br>
-            </div>
-          );
-        })}
-      </ul>
+      <div className="container">
+        <ul className="list-unstyled">
+          {comments.map((comment) => {
+            return (
+              <div key={comment.id}>
+                <li>{comment.comment}</li>
+                <br></br>
+                <li>
+                  -- {comment.author},
+                  {new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  }).format(new Date(Date.parse(comment.date)))}
+                </li>
+                <br></br>
+              </div>
+            );
+          })}
+        </ul>
+        <CommentForm />
+      </div>
     );
   }
 }
