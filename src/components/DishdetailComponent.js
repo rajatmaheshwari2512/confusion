@@ -36,7 +36,12 @@ class CommentForm extends Component {
     });
   }
   handleSubmit(values) {
-    alert(JSON.stringify(values));
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.name,
+      values.comment
+    );
   }
   render() {
     return (
@@ -140,11 +145,11 @@ function RenderDish({ selectedDish }) {
     </Card>
   );
 }
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments === null || comments === undefined) {
     return (
       <div className="container">
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   } else {
@@ -169,15 +174,14 @@ function RenderComments({ comments }) {
             );
           })}
         </ul>
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   }
 }
 const DishDetail = (props) => {
-  var selectedDish = props.selectedDish;
-  var comments = props.comments;
-  if (selectedDish === null || selectedDish === undefined) return <div></div>;
+  if (props.selectedDish === null || props.selectedDish === undefined)
+    return <div></div>;
   return (
     <div className="container">
       <div className="row">
@@ -185,20 +189,24 @@ const DishDetail = (props) => {
           <BreadcrumbItem>
             <Link to="/menu">Menu</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>{selectedDish.name}</BreadcrumbItem>
+          <BreadcrumbItem active>{props.selectedDish.name}</BreadcrumbItem>
         </Breadcrumb>
         <div className="col-12">
-          <h3>{selectedDish.name}</h3>
+          <h3>{props.selectedDish.name}</h3>
           <hr />
         </div>
       </div>
       <div className="row">
         <div className="col-12 col-md-5 m-1">
-          <RenderDish selectedDish={selectedDish} />
+          <RenderDish selectedDish={props.selectedDish} />
         </div>
         <div className="col-12 col-md-5 m-1">
           <h4>Comments</h4>
-          <RenderComments comments={comments} />
+          <RenderComments
+            comments={props.comments}
+            addComment={props.addComment}
+            dishId={props.selectedDish.id}
+          />
         </div>
       </div>
     </div>
