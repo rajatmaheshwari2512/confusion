@@ -6,12 +6,12 @@ export const addComment = (comment) => ({
   payload: comment,
 });
 
-export const postComment = (dishId, rating, comment, author) => (dispatch) => {
+export const postComment = (dishId, rating, comment, name) => (dispatch) => {
   const newComment = {
     dishId: dishId,
     rating: rating,
     comment: comment,
-    author: author,
+    author: name,
   };
   newComment.date = new Date().toISOString();
   return fetch(baseUrl + "comments", {

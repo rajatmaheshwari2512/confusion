@@ -38,12 +38,12 @@ class CommentForm extends Component {
     });
   }
   handleSubmit(values) {
-    //alert(JSON.stringify(values));
+    alert(JSON.stringify(values));
     this.props.postComment(
       this.props.dishId,
       values.rating,
       values.comment,
-      values.author
+      values.name
     );
   }
   render() {
@@ -90,8 +90,8 @@ class CommentForm extends Component {
                 </Label>
                 <Col md={12}>
                   <Control.text
-                    model=".author"
-                    name="author"
+                    model=".name"
+                    name="name"
                     className="form-control"
                     placeholder="Your Name"
                     validators={{
@@ -103,7 +103,7 @@ class CommentForm extends Component {
                 </Col>
                 <Errors
                   className="text-danger ml-3"
-                  model=".author"
+                  model=".name"
                   show="touched"
                   messages={{
                     required: "Your name is required",
