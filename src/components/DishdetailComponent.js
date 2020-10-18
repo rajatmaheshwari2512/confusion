@@ -38,11 +38,12 @@ class CommentForm extends Component {
     });
   }
   handleSubmit(values) {
-    this.props.addComment(
+    //alert(JSON.stringify(values));
+    this.props.postComment(
       this.props.dishId,
       values.rating,
-      values.name,
-      values.comment
+      values.comment,
+      values.author
     );
   }
   render() {
@@ -89,8 +90,8 @@ class CommentForm extends Component {
                 </Label>
                 <Col md={12}>
                   <Control.text
-                    model=".name"
-                    name="name"
+                    model=".author"
+                    name="author"
                     className="form-control"
                     placeholder="Your Name"
                     validators={{
@@ -102,7 +103,7 @@ class CommentForm extends Component {
                 </Col>
                 <Errors
                   className="text-danger ml-3"
-                  model=".name"
+                  model=".author"
                   show="touched"
                   messages={{
                     required: "Your name is required",
@@ -151,11 +152,11 @@ function RenderDish({ selectedDish }) {
     </Card>
   );
 }
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments, postComment, dishId }) {
   if (comments === null || comments === undefined) {
     return (
       <div className="container">
-        <CommentForm dishId={dishId} addComment={addComment} />
+        <CommentForm dishId={dishId} postComment={postComment} />
       </div>
     );
   } else {
@@ -180,7 +181,7 @@ function RenderComments({ comments, addComment, dishId }) {
             );
           })}
         </ul>
-        <CommentForm dishId={dishId} addComment={addComment} />
+        <CommentForm dishId={dishId} postComment={postComment} />
       </div>
     );
   }
@@ -226,7 +227,7 @@ const DishDetail = (props) => {
           <h4>Comments</h4>
           <RenderComments
             comments={props.comments}
-            addComment={props.addComment}
+            postComment={props.postComment}
             dishId={props.selectedDish.id}
           />
         </div>

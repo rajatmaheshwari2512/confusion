@@ -9,7 +9,7 @@ import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 import { connect } from "react-redux";
 import {
-  addComment,
+  postComment,
   fetchComments,
   fetchDishes,
   fetchPromos,
@@ -24,8 +24,8 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
-  addComment: (dishId, rating, name, comment) =>
-    dispatch(addComment(dishId, rating, name, comment)),
+  postComment: (dishId, rating, name, comment) =>
+    dispatch(postComment(dishId, rating, name, comment)),
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
@@ -77,7 +77,7 @@ class Main extends Component {
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
           commentsErrMess={this.props.comments.errmess}
-          addComment={this.props.addComment}
+          postComment={this.props.postComment}
         />
       );
     };
