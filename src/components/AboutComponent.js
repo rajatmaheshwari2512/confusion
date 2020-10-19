@@ -8,27 +8,52 @@ import {
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-function RenderLeader({ leader }) {
-  return (
-    <div className="container">
-      <Media key={leader.id} className="mt-5">
-        <Media left>
-          <Media object src={leader.image} alt={leader.name} />
+import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
+import { Stagger, Fade } from "react-animation-components";
+function RenderLeader({ leader, isLoading, errmess }) {
+  if (isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (errmess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{errmess}</h4>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="container">
+        <Media key={leader.id} className="mt-5">
+          <Media left>
+            <Media object src={baseUrl + leader.image} alt={leader.name} />
+          </Media>
+          <Media body className="ml-5">
+            <Media heading>{leader.name}</Media>
+            {leader.designation}
+            <br></br>
+            <br></br>
+            {leader.description}
+          </Media>
         </Media>
-        <Media body className="ml-5">
-          <Media heading>{leader.name}</Media>
-          {leader.designation}
-          <br></br>
-          <br></br>
-          {leader.description}
-        </Media>
-      </Media>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 function About(props) {
   const leaders = props.leaders.map((leader) => {
-    return <RenderLeader leader={leader} />;
+    return (
+      <Fade in>
+        <RenderLeader leader={leader} />
+      </Fade>
+    );
   });
 
   return (
@@ -107,7 +132,9 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12 ml-n5">
-          <Media list>{leaders}</Media>
+          <Media list>
+            <Stagger in>{leaders}</Stagger>
+          </Media>
         </div>
       </div>
     </div>
