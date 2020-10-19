@@ -244,7 +244,6 @@ export const postFeedback = (
     )
     .then((response) => response.json())
     .then((response) => {
-      dispatch(addComment(response));
       alert(`Thank you for your feedback ${JSON.stringify(response)}`);
     })
     .catch((error) => {

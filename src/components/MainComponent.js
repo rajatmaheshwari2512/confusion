@@ -143,13 +143,7 @@ class Main extends Component {
               <Route
                 exact
                 path="/aboutus"
-                component={() => (
-                  <About
-                    leaders={this.props.leaders.leaders}
-                    isLoading={this.props.leaders.isLoading}
-                    errmess={this.props.leaders.errmess}
-                  />
-                )}
+                component={() => <About leaders={this.props.leaders} />}
               />
               <Redirect to="/home" />
             </Switch>
